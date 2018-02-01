@@ -13,6 +13,7 @@ import javax.ws.rs.core.MediaType;
 import com.huios.dao.CompteOADException;
 import com.huios.domaine.Client;
 import com.huios.domaine.Compte;
+import com.huios.service.ConseillerServiceException;
 import com.huios.service.IServiceLocal;
 
 @Path("/banque")
@@ -21,13 +22,26 @@ public class WSBanque {
 	@Inject
 	IServiceLocal service;
 	
+	
+	@GET
+	@Path("/virement/{idCompteADebiter}/{idCompteACrediter}/{montant}")
+	@Produces(MediaType.TEXT_PLAIN)
+	public void effectuerVirement(@PathParam("idCompteADebiter") int idCompteADebiter, @PathParam("idCompteACrediter") int idCompteACrediter, @PathParam("montant") double montant) throws ConseillerServiceException {
+	System.out.println("ca marche?");
+		Compte compteADebiter = service.getCompteById(idCompteADebiter);
+		Compte compteACrediter = service.getCompteById(idCompteACrediter);
+		service.effectuerVirement(compteADebiter, compteACrediter, montant);
+	}
+	
+	
+	
 	// Ok
-		@GET
-		@Path("/listAllCompte")
-		@Produces(MediaType.TEXT_PLAIN)
-		public List<Compte> getTousLesComtpes() {
-			return service.getTousLesComptes();
-		}
+	@GET
+	@Path("/listAllCompte")
+	@Produces(MediaType.TEXT_PLAIN)
+	public List<Compte> getTousLesComtpes() {
+		return service.getTousLesComptes();
+	}
 	
 	// Ok
 	@GET
@@ -78,6 +92,7 @@ public class WSBanque {
 	@Path("/majCompte/{idCompte}/{nouveauSolde}")
 	@Produces(MediaType.TEXT_PLAIN)
 	public void majCompte(@PathParam("idCompte") int idCompte, @PathParam("nouveauSolde") double nouveauSolde) throws CompteOADException {
+		System.out.println("Coucou hibou");
 	}
 	
 	

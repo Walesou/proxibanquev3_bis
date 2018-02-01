@@ -66,7 +66,7 @@ public class DaoImpl implements Idao {
 	public void majCompte(int idCompte, double nouveauSolde) throws CompteOADException {
 
 		// TODO Auto-generated method stub
-		Compte compte = em.find(Compte.class, idCompte);
+		Compte compte = em.getReference(Compte.class, idCompte);
 		compte.setSolde(nouveauSolde);
 		em.merge(compte);
 	}
