@@ -14,6 +14,8 @@ import com.huios.domaine.Compte;
 @Local
 public interface IServiceLocal {
 	
+	public List<Compte> getTousLesComptes();
+	
 	/**
 	 * Renvoie la liste des comptes d’un client en fonction de sa clé primaire.
 	 *

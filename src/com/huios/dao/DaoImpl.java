@@ -17,7 +17,17 @@ import com.huios.service.ConseillerServiceException;
 public class DaoImpl implements Idao {
 	@PersistenceContext
 	EntityManager em;
-
+	
+	@Override
+	public List<Compte> getTousLesComptes() {
+		// TODO Auto-generated method stub
+		List<Compte> comptes = new ArrayList<>();
+		Query query = em.createQuery("select alias from Compte alias");
+		comptes = query.getResultList();
+		return comptes;
+	}
+	
+	
 	// WebService
 	@Override
 	public List<Client> getTousLesClients() {
@@ -44,9 +54,12 @@ public class DaoImpl implements Idao {
 	@Override
 	public Compte getCompteById(int id) {
 		// TODO Auto-generated method stub
-		Query query = em.createQuery("select alias from Compte alias where alias.identifiant = :id");
-		query.setParameter("id", id);
-		return (Compte) query.getSingleResult();
+//		Compte compte = em.find(Compte.class, id);
+
+		//Query query = em.createQuery("select alias from Compte alias where alias.identifiant = :id");
+		//query.setParameter("id", id);
+		//return (Compte) query.getSingleResult();
+		return em.find(Compte.class, id);
 	}
 
 	@Override

@@ -10,6 +10,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import com.huios.dao.CompteOADException;
 import com.huios.domaine.Client;
 import com.huios.domaine.Compte;
 import com.huios.service.IServiceLocal;
@@ -19,21 +20,30 @@ public class WSBanque {
 
 	@Inject
 	IServiceLocal service;
-
+	
+	// Ok
+		@GET
+		@Path("/listAllCompte")
+		@Produces(MediaType.TEXT_PLAIN)
+		public List<Compte> getTousLesComtpes() {
+			return service.getTousLesComptes();
+		}
+	
 	// Ok
 	@GET
 	@Path("/listAllClients")
 	@Produces(MediaType.TEXT_PLAIN)
 	public List<Client> getTousLesClients() {
-		System.out.println("Coucou" + service.getTousLesClients());
+		//System.out.println("Coucou" + service.getTousLesClients());
 		return service.getTousLesClients();
 	}
-
+	
+	//KO
 	@GET
 	@Path("/compte/{id}")
 	@Produces(MediaType.TEXT_PLAIN)
 	public Compte getCompteById(@PathParam("id") int id) {
-		System.out.println("louis et maria" + service.getCompteById(id));
+		//System.out.println("louis et maria" + service.getCompteById(id));
 		return service.getCompteById(id);
 	}
 
@@ -53,7 +63,8 @@ public class WSBanque {
 	public Client getClientByID(@PathParam("id") int id) {
 		return service.getClientByID(id);
 	}
-
+	
+	//KO
 	// @GET
 	// @Path("/list/{id}")
 	// @Produces(MediaType.TEXT_PLAIN)
@@ -61,7 +72,15 @@ public class WSBanque {
 	// System.out.println("louis et maria" + service.getComptesByID(idClient) );
 	// return service.getComptesByID(idClient);
 	// }
-
+	
+	
+	@GET
+	@Path("/majCompte/{idCompte}/{nouveauSolde}")
+	@Produces(MediaType.TEXT_PLAIN)
+	public void majCompte(@PathParam("idCompte") int idCompte, @PathParam("nouveauSolde") double nouveauSolde) throws CompteOADException {
+	}
+	
+	
 	//////////////////////////////////////////////////
 	// récupération d'un élémént
 	@GET

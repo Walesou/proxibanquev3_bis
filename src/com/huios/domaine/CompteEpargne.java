@@ -1,12 +1,14 @@
 package com.huios.domaine;
 
+import java.io.Serializable;
+
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 /** @author Étienne, Sophia et Maria */
 @Entity
-@DiscriminatorValue("compte_epargne")
-public class CompteEpargne extends Compte {
+@DiscriminatorValue("Epargne")
+public class CompteEpargne extends Compte implements Serializable {
 
 	private static final long serialVersionUID = -2684741663640307269L;
 	/** Le taux de rémunération du compte épargne par défaut. */

@@ -6,14 +6,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.xml.bind.annotation.XmlSeeAlso;
 
 /** @author Étienne, Sophia, Maria, Louis */
 @Entity
-@Inheritance
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "compte_type")
-@XmlSeeAlso({CompteCourant.class,CompteEpargne.class})
+//@XmlSeeAlso({CompteCourant.class,CompteEpargne.class})
 public abstract class Compte implements java.io.Serializable {
 
 	private static final long serialVersionUID = 4368759148699972357L;

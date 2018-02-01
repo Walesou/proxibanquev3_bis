@@ -11,6 +11,8 @@ import com.huios.service.ConseillerServiceException;
 public interface Idao {
 	
 	
+	public List<Compte> getTousLesComptes();
+	
 	/**
 	 * Renvoie la liste des comptes d’un client en fonction de sa clé primaire.
 	 *

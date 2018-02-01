@@ -20,6 +20,12 @@ public class ServiceImpl implements IServiceLocal, IServiceRemote {
 	@Inject
 	Idao dao;
 	
+	
+	public List<Compte> getTousLesComptes(){
+		return dao.getTousLesComptes();
+	}
+	
+	
 	public List<Client> getTousLesClients() {
 		// TODO Auto-generated method stub
 		return dao.getTousLesClients();

@@ -1,12 +1,14 @@
 package com.huios.domaine;
 
+import java.io.Serializable;
+
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 /** @author Étienne, Sophia, Maria, Louis */
 @Entity
-@DiscriminatorValue("compte_courant")
-public class CompteCourant extends Compte {
+@DiscriminatorValue("Courant")
+public class CompteCourant extends Compte implements Serializable {
 
 	private static final long serialVersionUID = 2618352047701627204L;
 	/** Autorisation de découvert par défaut de 1000 €. */
