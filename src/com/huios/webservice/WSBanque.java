@@ -1,7 +1,6 @@
 package com.huios.webservice;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -13,9 +12,7 @@ import javax.ws.rs.core.MediaType;
 
 import com.huios.domaine.Client;
 import com.huios.domaine.Compte;
-import com.huios.domaine.CompteCourant;
 import com.huios.service.IServiceLocal;
-
 
 @Path("/banque")
 public class WSBanque {
@@ -23,68 +20,77 @@ public class WSBanque {
 	@Inject
 	IServiceLocal service;
 
-	
+	// Ok
 	@GET
 	@Path("/listAllClients")
 	@Produces(MediaType.TEXT_PLAIN)
 	public List<Client> getTousLesClients() {
-		System.out.println("Coucou" + service.getTousLesClients() );
+		System.out.println("Coucou" + service.getTousLesClients());
 		return service.getTousLesClients();
 	}
-	
+
 	@GET
 	@Path("/compte/{id}")
 	@Produces(MediaType.TEXT_PLAIN)
 	public Compte getCompteById(@PathParam("id") int id) {
-		System.out.println("louis et maria" + service.getCompteById(id) );
+		System.out.println("louis et maria" + service.getCompteById(id));
 		return service.getCompteById(id);
 	}
-	
-	
+
+	// Ok
 	@GET
 	@Path("/listAuthName/{authName}")
 	@Produces(MediaType.TEXT_PLAIN)
 	public List<Client> getClientsByConseillerAuthName(@PathParam("authName") String authName) {
-//		System.out.println("louis et maria" + service.getCompteById(id) );
+		// System.out.println("louis et maria" + service.getCompteById(id) );
 		return service.getClientsByConseillerAuthName(authName);
 	}
-	
-//	@GET
-//	@Path("/list/{id}")
-//	@Produces(MediaType.TEXT_PLAIN)
-//	public List<Compte> getComptesByID(@PathParam("id") int idClient) {
-//		System.out.println("louis et maria" + service.getComptesByID(idClient) );
-//		return service.getComptesByID(idClient);
-//	}
-	
-	
+
+	// Ok
+	@GET
+	@Path("/client/{id}")
+	@Produces(MediaType.TEXT_PLAIN)
+	public Client getClientByID(@PathParam("id") int id) {
+		return service.getClientByID(id);
+	}
+
+	// @GET
+	// @Path("/list/{id}")
+	// @Produces(MediaType.TEXT_PLAIN)
+	// public List<Compte> getComptesByID(@PathParam("id") int idClient) {
+	// System.out.println("louis et maria" + service.getComptesByID(idClient) );
+	// return service.getComptesByID(idClient);
+	// }
+
 	//////////////////////////////////////////////////
-	//récupération d'un élémént
-		@GET
-		@Path("/test")
-		@Produces(MediaType.TEXT_PLAIN)
-		public String Test() {
-			return "TEST";
-		}
-		// récupération d'une valeur après envoi de paramètre
-		@GET
-		@Path("/conversion/{montant}")
-		public double conversionED(@PathParam("montant")double mt) {
-			return mt*1.24;
-		}
-		//récupération d'une liste d'éléments
-		@GET
-		@Path("/infos")
-		//@Produces(MediaType.TEXT_PLAIN)
-		@Produces(MediaType.APPLICATION_JSON)
-		//@Produces(MediaType.APPLICATION_XML)
-		public List<String> getInfos() {
-			List<String> liste = new ArrayList<String>();
-			liste.add("A");
-			liste.add("B");
-			liste.add("C");
-			liste.add("D");
-			
-			return liste;
-		}
+	// récupération d'un élémént
+	@GET
+	@Path("/test")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String Test() {
+		return "TEST";
+	}
+
+	// récupération d'une valeur après envoi de paramètre
+	@GET
+	@Path("/conversion/{montant}")
+	public double conversionED(@PathParam("montant") double mt) {
+		return mt * 1.24;
+	}
+
+	// récupération d'une liste d'éléments
+	@GET
+	@Path("/infos")
+	// @Produces(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.APPLICATION_JSON)
+	// @Produces(MediaType.APPLICATION_XML)
+	public List<String> getInfos() {
+		List<String> liste = new ArrayList<String>();
+		liste.add("A");
+		liste.add("B");
+		liste.add("C");
+		liste.add("D");
+
+		return liste;
+	}
 }

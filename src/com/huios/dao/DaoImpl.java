@@ -13,35 +13,36 @@ import com.huios.domaine.Compte;
 import com.huios.domaine.CompteException;
 import com.huios.service.ConseillerServiceException;
 
-
-
-
 @Singleton
-public class DaoImpl implements Idao{
+public class DaoImpl implements Idao {
 	@PersistenceContext
 	EntityManager em;
-	
+
+	// WebService
 	@Override
-	public List<Client> getTousLesClients(){
+	public List<Client> getTousLesClients() {
 		// TODO Auto-generated method stub
 		List<Client> clients = new ArrayList<>();
 		Query query = em.createQuery("select alias from Client alias");
 		clients = query.getResultList();
 		return clients;
 	}
-	
+
+	// WebService
 	@Override
 	public List<Compte> getComptesByID(int idClient) {
 		// TODO Auto-generated method stub
-		
+
 		List<Compte> comptes = new ArrayList<>();
-		Query query = em.createQuery("select alias from Compte alias");// WHERE alias.client_identifiant = :idClient 
+		Query query = em.createQuery("select alias from Compte alias WHERE alias.client_identifiant = :idClient");
+		query.setParameter("id", idClient);
 		comptes = query.getResultList();
 		return comptes;
 	}
-	
+
+	// WebService
 	@Override
-	public Compte getCompteById(int id)  {
+	public Compte getCompteById(int id) {
 		// TODO Auto-generated method stub
 		Query query = em.createQuery("select alias from Compte alias where alias.identifiant = :id");
 		query.setParameter("id", id);
@@ -50,7 +51,7 @@ public class DaoImpl implements Idao{
 
 	@Override
 	public void majCompte(int idCompte, double nouveauSolde) throws CompteOADException {
-		
+
 		// TODO Auto-generated method stub
 		Compte compte = em.find(Compte.class, idCompte);
 		compte.setSolde(nouveauSolde);
@@ -64,34 +65,37 @@ public class DaoImpl implements Idao{
 		em.merge(compte2);
 	}
 
+	// WebService
 	@Override
 	public List<Client> getClientsByConseillerAuthName(String authName) {
 		// TODO Auto-generated method stub
 		List<Client> clients = new ArrayList<>();
 		Query query = em.createQuery("select alias from Client alias where alias.conseiller.nom like :authName ");
-		query.setParameter("authName", "%"+authName+"%");
+		query.setParameter("authName", "%" + authName + "%");
 		clients = query.getResultList();
 		return clients;
 	}
 
-	
-
+	// WebService
 	@Override
 	public Client getClientByID(int id) {
 		// TODO Auto-generated method stub
 		return em.find(Client.class, id);
 	}
 
+	// WebService
 	@Override
 	public void majClient(Client client) throws ClientOADException {
 		// TODO Auto-generated method stub
 		em.merge(client);
 	}
 
-	//===================================================================================================================================================
-	
+	// ===================================================================================================================================================
+
+	// WebService
 	@Override
-	public void effectuerVirement(Compte compteADebiter, Compte compteACrediter, double montant) throws ConseillerServiceException {
+	public void effectuerVirement(Compte compteADebiter, Compte compteACrediter, double montant)
+			throws ConseillerServiceException {
 		// TODO Auto-generated method stub
 		if (montant <= 0) {
 			throw new ConseillerServiceException("Le montant à débiter doit être positif");
@@ -133,6 +137,7 @@ public class DaoImpl implements Idao{
 		}
 	}
 
+	// WebService
 	@Override
 	public List<Compte> getComptes(int idClient) {
 		// TODO Auto-generated method stub
@@ -169,15 +174,13 @@ public class DaoImpl implements Idao{
 		client.setAdresse(adresse);
 		em.merge(client);
 	}
-	
-	
-	
+
 	///////////////////////////////////////
 	@Override
 	public void addCompte(Compte c) {
 		// TODO Auto-generated method stub
 		em.persist(c);
-		//return false;
+		// return false;
 	}
 
 	@Override
