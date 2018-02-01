@@ -4,10 +4,23 @@ import java.util.List;
 
 import com.huios.domaine.Client;
 import com.huios.domaine.Compte;
+import com.huios.domaine.Conseiller;
 import com.huios.service.ConseillerServiceException;
 
 public interface Idao {
-
+	
+	/**
+	 *  Permet de faire la vérification de l'identifiant et du mot de passe 
+	 * du conseiller
+	 * @param courriel
+	 * 			identifiant du conseiller
+	 * @param motDePasse
+	 * 			mot de passe du conseiller
+	 * @return
+	 * 		true ou false
+	 */
+	public boolean verifAuthentification(String courriel, String motDePasse) throws ConseillerServiceException;
+	
 	public List<Compte> getTousLesComptes();
 
 	/**

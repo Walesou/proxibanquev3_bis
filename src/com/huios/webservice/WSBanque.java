@@ -20,7 +20,18 @@ public class WSBanque {
 
 	@Inject
 	IServiceLocal service;
-
+	
+	// Ok
+	@GET
+	@Path("/authentification/{courriel}/{motDePasse}")
+	@Produces(MediaType.TEXT_PLAIN)
+	public boolean verifAuthentification(@PathParam("courriel") String courriel,
+			@PathParam("motDePasse") String motDePasse)
+					throws ConseillerServiceException {
+		return service.verifAuthentification(courriel, motDePasse);
+	}
+	
+	
 	// Ok
 	@GET
 	@Path("/virement/{idCompteADebiter}/{idCompteACrediter}/{montant}")

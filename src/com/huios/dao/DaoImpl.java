@@ -11,13 +11,33 @@ import javax.persistence.Query;
 import com.huios.domaine.Client;
 import com.huios.domaine.Compte;
 import com.huios.domaine.CompteException;
+import com.huios.domaine.Conseiller;
 import com.huios.service.ConseillerServiceException;
 
 @Singleton
 public class DaoImpl implements Idao {
 	@PersistenceContext
 	EntityManager em;
+	
 
+	@Override
+	public boolean verifAuthentification(String courriel, String motDePasse) throws ConseillerServiceException {
+		// TODO Auto-generated method stub
+		
+		Conseiller conseiller = null;
+		Query query = em.createQuery("select alias from Conseiller alias where courriel = :courriel and motDePasse = :motDePasse");
+		query.setParameter("courriel", courriel);
+		query.setParameter("motDePasse", motDePasse);
+		conseiller = (Conseiller) query.getSingleResult();
+		
+		if(conseiller == null) {
+			return false;
+		}
+		else
+			return true;			
+	}
+
+	
 	// WebService
 	@Override
 	public void effectuerVirement(Compte compteADebiter, Compte compteACrediter, double montant)
@@ -135,5 +155,8 @@ public class DaoImpl implements Idao {
 		comptes = query.getResultList();
 		return comptes;
 	}
+
+
+
 
 }

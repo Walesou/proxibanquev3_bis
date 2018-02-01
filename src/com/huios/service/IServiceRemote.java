@@ -11,7 +11,20 @@ import com.huios.domaine.Compte;
 
 @Remote
 public interface IServiceRemote {
-
+	
+	
+	/**
+	 *  Permet de faire la v�rification de l'identifiant et du mot de passe 
+	 * du conseiller
+	 * @param courriel
+	 * 			identifiant du conseiller
+	 * @param motDePasse
+	 * 			mot de passe du conseiller
+	 * @return
+	 * 		true ou false
+	 */
+	public boolean verifAuthentification(String courriel, String motDePasse) throws ConseillerServiceException;
+	
 	/**
 	 * Renvoie la liste des comptes d’un client en fonction de sa clé primaire.
 	 *

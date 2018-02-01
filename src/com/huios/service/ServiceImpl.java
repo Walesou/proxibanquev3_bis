@@ -10,13 +10,20 @@ import com.huios.dao.CompteOADException;
 import com.huios.dao.Idao;
 import com.huios.domaine.Client;
 import com.huios.domaine.Compte;
+import com.huios.domaine.Conseiller;
 
 @Stateless
 public class ServiceImpl implements IServiceLocal, IServiceRemote {
 
 	@Inject
 	Idao dao;
-
+	
+	@Override
+	public boolean verifAuthentification(String courriel, String motDePasse) throws ConseillerServiceException {
+		// TODO Auto-generated method stub
+		return dao.verifAuthentification(courriel, motDePasse);
+	}
+	
 	@Override
 	public List<Compte> getTousLesComptes() {
 		return dao.getTousLesComptes();
@@ -79,5 +86,9 @@ public class ServiceImpl implements IServiceLocal, IServiceRemote {
 		// TODO Auto-generated method stub
 		return dao.getComptes(idClient);
 	}
+
+
+
+
 
 }
