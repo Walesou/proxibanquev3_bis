@@ -102,7 +102,7 @@ public interface IServiceRemote {
 	 * @throws ClientOADException
 	 *             erreur si la mise à jour a échouée
 	 */
-	void majClient(Client client) throws ClientOADException;
+	boolean majClient(Client client) throws ClientOADException;
 
 	// ==========================================================================================================================================
 
@@ -122,7 +122,7 @@ public interface IServiceRemote {
 	 * @throws ConseillerServiceException
 	 *             erreur si la modification du solde a échouée
 	 */
-	public void effectuerVirement(Compte compteADebiter, Compte compteACrediter, double montant)
+	public boolean effectuerVirement(Compte compteADebiter, Compte compteACrediter, double montant)
 			throws ConseillerServiceException;
 
 	/**

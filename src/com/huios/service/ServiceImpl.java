@@ -66,19 +66,17 @@ public class ServiceImpl implements IServiceLocal, IServiceRemote {
 	}
 
 	@Override
-	public void majClient(Client client) throws ClientOADException {
+	public boolean majClient(Client client) throws ClientOADException {
 		// TODO Auto-generated method stub
-		dao.majClient(client);
+		 return dao.majClient(client);
 	}
 
 	// ================================================================================================================================================
 
 	@Override
-	public void effectuerVirement(Compte compteADebiter, Compte compteACrediter, double montant)
+	public boolean effectuerVirement(Compte compteADebiter, Compte compteACrediter, double montant)
 			throws ConseillerServiceException {
-		// TODO Auto-generated method stub
-		dao.effectuerVirement(compteADebiter, compteACrediter, montant);
-
+		return dao.effectuerVirement(compteADebiter, compteACrediter, montant);
 	}
 
 	@Override
@@ -86,9 +84,6 @@ public class ServiceImpl implements IServiceLocal, IServiceRemote {
 		// TODO Auto-generated method stub
 		return dao.getComptes(idClient);
 	}
-
-
-
 
 
 }

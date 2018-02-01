@@ -36,12 +36,12 @@ public class WSBanque {
 	@GET
 	@Path("/virement/{idCompteADebiter}/{idCompteACrediter}/{montant}")
 	@Produces(MediaType.TEXT_PLAIN)
-	public void effectuerVirement(@PathParam("idCompteADebiter") int idCompteADebiter,
+	public boolean effectuerVirement(@PathParam("idCompteADebiter") int idCompteADebiter,
 			@PathParam("idCompteACrediter") int idCompteACrediter, @PathParam("montant") double montant)
 			throws ConseillerServiceException {
 		Compte compteADebiter = service.getCompteById(idCompteADebiter);
 		Compte compteACrediter = service.getCompteById(idCompteACrediter);
-		service.effectuerVirement(compteADebiter, compteACrediter, montant);
+		return service.effectuerVirement(compteADebiter, compteACrediter, montant);
 	}
 
 	// Ok
@@ -72,44 +72,44 @@ public class WSBanque {
 	@GET
 	@Path("/nomclient/{idClient}/{nom}")
 	@Produces(MediaType.TEXT_PLAIN)
-	public void modifierNomClient(@PathParam("idClient") int idClient, @PathParam("nom") String nom)
+	public boolean modifierNomClient(@PathParam("idClient") int idClient, @PathParam("nom") String nom)
 			throws ClientOADException {
 		Client client = service.getClientByID(idClient);
 		client.setNom(nom);
-		service.majClient(client);
+		return service.majClient(client);
 	}
 
 	// Ok
 	@GET
 	@Path("/prenomclient/{idClient}/{prenom}")
 	@Produces(MediaType.TEXT_PLAIN)
-	public void modifierPrenomClient(@PathParam("idClient") int idClient, @PathParam("prenom") String prenom)
+	public boolean modifierPrenomClient(@PathParam("idClient") int idClient, @PathParam("prenom") String prenom)
 			throws ClientOADException {
 		Client client = service.getClientByID(idClient);
 		client.setPrenom(prenom);
-		service.majClient(client);
+		return service.majClient(client);
 	}
 
 	// Ok
 	@GET
 	@Path("/courrielclient/{idClient}/{courriel}")
 	@Produces(MediaType.TEXT_PLAIN)
-	public void modifierCourrielClient(@PathParam("idClient") int idClient, @PathParam("courriel") String courriel)
+	public boolean modifierCourrielClient(@PathParam("idClient") int idClient, @PathParam("courriel") String courriel)
 			throws ClientOADException {
 		Client client = service.getClientByID(idClient);
 		client.setCourriel(courriel);
-		service.majClient(client);
+		return service.majClient(client);
 	}
 
 	// Ok
 	@GET
 	@Path("/adresseclient/{idClient}/{adresse}")
 	@Produces(MediaType.TEXT_PLAIN)
-	public void modifierAdresseClient(@PathParam("idClient") int idClient, @PathParam("adresse") String adresse)
+	public boolean modifierAdresseClient(@PathParam("idClient") int idClient, @PathParam("adresse") String adresse)
 			throws ClientOADException {
 		Client client = service.getClientByID(idClient);
 		client.setAdresse(adresse);
-		service.majClient(client);
+		return service.majClient(client);
 	}
 
 	// Ok

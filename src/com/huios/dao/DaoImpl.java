@@ -40,7 +40,7 @@ public class DaoImpl implements Idao {
 	
 	// WebService
 	@Override
-	public void effectuerVirement(Compte compteADebiter, Compte compteACrediter, double montant)
+	public boolean effectuerVirement(Compte compteADebiter, Compte compteACrediter, double montant)
 			throws ConseillerServiceException {
 		// TODO Auto-generated method stub
 		if (montant <= 0) {
@@ -78,6 +78,7 @@ public class DaoImpl implements Idao {
 			 * compteACrediter.getSolde());
 			 */
 			this.majComptesAtomique(compteADebiter, compteACrediter);
+			return true;
 		} catch (CompteOADException e) {
 			throw new ConseillerServiceException("Erreur lors de la mise à jour du compte dans la base de donnée");
 		}
@@ -111,9 +112,16 @@ public class DaoImpl implements Idao {
 
 	// WebService
 	@Override
-	public void majClient(Client client) throws ClientOADException {
+	public boolean majClient(Client client) throws ClientOADException {
 		// TODO Auto-generated method stub
-		em.merge(client);
+		try {
+			em.merge(client);
+			return true;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	// WebService
@@ -155,8 +163,5 @@ public class DaoImpl implements Idao {
 		comptes = query.getResultList();
 		return comptes;
 	}
-
-
-
 
 }
