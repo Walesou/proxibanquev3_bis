@@ -17,93 +17,6 @@ import com.huios.service.ConseillerServiceException;
 public class DaoImpl implements Idao {
 	@PersistenceContext
 	EntityManager em;
-	
-	@Override
-	public List<Compte> getTousLesComptes() {
-		// TODO Auto-generated method stub
-		List<Compte> comptes = new ArrayList<>();
-		Query query = em.createQuery("select alias from Compte alias");
-		comptes = query.getResultList();
-		return comptes;
-	}
-	
-	
-	// WebService
-	@Override
-	public List<Client> getTousLesClients() {
-		// TODO Auto-generated method stub
-		List<Client> clients = new ArrayList<>();
-		Query query = em.createQuery("select alias from Client alias");
-		clients = query.getResultList();
-		return clients;
-	}
-
-	// WebService
-	@Override
-	public List<Compte> getComptesByID(int idClient) {
-		// TODO Auto-generated method stub
-
-		List<Compte> comptes = new ArrayList<>();
-		Query query = em.createQuery("select alias from Compte alias WHERE alias.client_identifiant = :idClient");
-		query.setParameter("id", idClient);
-		comptes = query.getResultList();
-		return comptes;
-	}
-
-	// WebService
-	@Override
-	public Compte getCompteById(int id) {
-		// TODO Auto-generated method stub
-//		Compte compte = em.find(Compte.class, id);
-
-		//Query query = em.createQuery("select alias from Compte alias where alias.identifiant = :id");
-		//query.setParameter("id", id);
-		//return (Compte) query.getSingleResult();
-		return em.find(Compte.class, id);
-	}
-
-	@Override
-	public void majCompte(int idCompte, double nouveauSolde) throws CompteOADException {
-
-		// TODO Auto-generated method stub
-		Compte compte = em.getReference(Compte.class, idCompte);
-		compte.setSolde(nouveauSolde);
-		em.merge(compte);
-	}
-
-	@Override
-	public void majComptesAtomique(Compte compte1, Compte compte2) throws CompteOADException {
-		// TODO Auto-generated method stub
-		em.merge(compte1);
-		em.merge(compte2);
-	}
-
-	// WebService
-	@Override
-	public List<Client> getClientsByConseillerAuthName(String authName) {
-		// TODO Auto-generated method stub
-		List<Client> clients = new ArrayList<>();
-		Query query = em.createQuery("select alias from Client alias where alias.conseiller.nom like :authName ");
-		query.setParameter("authName", "%" + authName + "%");
-		clients = query.getResultList();
-		return clients;
-	}
-
-	// WebService
-	@Override
-	public Client getClientByID(int id) {
-		// TODO Auto-generated method stub
-		return em.find(Client.class, id);
-	}
-
-	// WebService
-	@Override
-	public void majClient(Client client) throws ClientOADException {
-		// TODO Auto-generated method stub
-		em.merge(client);
-	}
-
-	// ===================================================================================================================================================
 
 	// WebService
 	@Override
@@ -152,72 +65,75 @@ public class DaoImpl implements Idao {
 
 	// WebService
 	@Override
-	public List<Compte> getComptes(int idClient) {
+	public List<Client> getTousLesClients() {
+		List<Client> clients = new ArrayList<>();
+		Query query = em.createQuery("select alias from Client alias");
+		clients = query.getResultList();
+		return clients;
+	}
+
+	// WebService
+	@Override
+	public Client getClientByID(int id) {
 		// TODO Auto-generated method stub
+		return em.find(Client.class, id);
+	}
+
+	// WebService
+	@Override
+	public List<Client> getClientsByConseillerAuthName(String authName) {
+		List<Client> clients = new ArrayList<>();
+		Query query = em.createQuery("select alias from Client alias where alias.conseiller.nom like :authName ");
+		query.setParameter("authName", "%" + authName + "%");
+		clients = query.getResultList();
+		return clients;
+	}
+
+	// WebService
+	@Override
+	public void majClient(Client client) throws ClientOADException {
+		// TODO Auto-generated method stub
+		em.merge(client);
+	}
+
+	// WebService
+	@Override
+	public List<Compte> getComptesByID(int idClient) {
+		List<Compte> comptes = new ArrayList<>();
+		Query query = em.createQuery("select alias from Compte alias WHERE alias.client.identifiant = :idClient");
+		query.setParameter("idClient", idClient);
+		comptes = query.getResultList();
+		return comptes;
+	}
+
+	// WebService
+	@Override
+	public Compte getCompteById(int id) {
+		return em.find(Compte.class, id);
+	}
+
+	@Override
+	public void majComptesAtomique(Compte compte1, Compte compte2) throws CompteOADException {
+		em.merge(compte1);
+		em.merge(compte2);
+	}
+
+	@Override
+	public List<Compte> getTousLesComptes() {
 		List<Compte> comptes = new ArrayList<>();
 		Query query = em.createQuery("select alias from Compte alias");
 		comptes = query.getResultList();
 		return comptes;
 	}
 
+	// WebService
 	@Override
-	public void modifierNomClient(Client client, String nom) throws ConseillerServiceException {
+	public List<Compte> getComptes(int idClient) {
 		// TODO Auto-generated method stub
-		client.setNom(nom);
-		em.merge(client);
-	}
-
-	@Override
-	public void modifierPrenomClient(Client client, String prenom) throws ConseillerServiceException {
-		// TODO Auto-generated method stub
-		client.setPrenom(prenom);
-		em.merge(client);
-	}
-
-	@Override
-	public void modifierCourrielClient(Client client, String courriel) throws ConseillerServiceException {
-		// TODO Auto-generated method stub
-		client.setCourriel(courriel);
-		em.merge(client);
-	}
-
-	@Override
-	public void modifierAdresseClient(Client client, String adresse) throws ConseillerServiceException {
-		// TODO Auto-generated method stub
-		client.setAdresse(adresse);
-		em.merge(client);
-	}
-
-	///////////////////////////////////////
-	@Override
-	public void addCompte(Compte c) {
-		// TODO Auto-generated method stub
-		em.persist(c);
-		// return false;
-	}
-
-	@Override
-	public List<Compte> consulterComptes() {
-		// TODO Auto-generated method stub
-		return em.createQuery("select c from Compte c").getResultList();
-	}
-
-	@Override
-	public Compte consulterCompte(Long code) {
-		// TODO Auto-generated method stub
-		return em.find(Compte.class, code);
-	}
-
-	@Override
-	public boolean verser(Long code, double montant) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean retirer(Long code, double montant) {
-		// TODO Auto-generated method stub
-		return false;
+		List<Compte> comptes = new ArrayList<>();
+		Query query = em.createQuery("select alias from Compte alias");
+		comptes = query.getResultList();
+		return comptes;
 	}
 
 }

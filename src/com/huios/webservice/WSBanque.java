@@ -1,6 +1,5 @@
 package com.huios.webservice;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -10,7 +9,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import com.huios.dao.CompteOADException;
+import com.huios.dao.ClientOADException;
 import com.huios.domaine.Client;
 import com.huios.domaine.Compte;
 import com.huios.service.ConseillerServiceException;
@@ -21,53 +20,25 @@ public class WSBanque {
 
 	@Inject
 	IServiceLocal service;
-	
-	
+
+	// Ok
 	@GET
 	@Path("/virement/{idCompteADebiter}/{idCompteACrediter}/{montant}")
 	@Produces(MediaType.TEXT_PLAIN)
-	public void effectuerVirement(@PathParam("idCompteADebiter") int idCompteADebiter, @PathParam("idCompteACrediter") int idCompteACrediter, @PathParam("montant") double montant) throws ConseillerServiceException {
-	System.out.println("ca marche?");
+	public void effectuerVirement(@PathParam("idCompteADebiter") int idCompteADebiter,
+			@PathParam("idCompteACrediter") int idCompteACrediter, @PathParam("montant") double montant)
+			throws ConseillerServiceException {
 		Compte compteADebiter = service.getCompteById(idCompteADebiter);
 		Compte compteACrediter = service.getCompteById(idCompteACrediter);
 		service.effectuerVirement(compteADebiter, compteACrediter, montant);
 	}
-	
-	
-	
-	// Ok
-	@GET
-	@Path("/listAllCompte")
-	@Produces(MediaType.TEXT_PLAIN)
-	public List<Compte> getTousLesComtpes() {
-		return service.getTousLesComptes();
-	}
-	
+
 	// Ok
 	@GET
 	@Path("/listAllClients")
 	@Produces(MediaType.TEXT_PLAIN)
 	public List<Client> getTousLesClients() {
-		//System.out.println("Coucou" + service.getTousLesClients());
 		return service.getTousLesClients();
-	}
-	
-	//KO
-	@GET
-	@Path("/compte/{id}")
-	@Produces(MediaType.TEXT_PLAIN)
-	public Compte getCompteById(@PathParam("id") int id) {
-		//System.out.println("louis et maria" + service.getCompteById(id));
-		return service.getCompteById(id);
-	}
-
-	// Ok
-	@GET
-	@Path("/listAuthName/{authName}")
-	@Produces(MediaType.TEXT_PLAIN)
-	public List<Client> getClientsByConseillerAuthName(@PathParam("authName") String authName) {
-		// System.out.println("louis et maria" + service.getCompteById(id) );
-		return service.getClientsByConseillerAuthName(authName);
 	}
 
 	// Ok
@@ -77,54 +48,73 @@ public class WSBanque {
 	public Client getClientByID(@PathParam("id") int id) {
 		return service.getClientByID(id);
 	}
-	
-	//KO
-	// @GET
-	// @Path("/list/{id}")
-	// @Produces(MediaType.TEXT_PLAIN)
-	// public List<Compte> getComptesByID(@PathParam("id") int idClient) {
-	// System.out.println("louis et maria" + service.getComptesByID(idClient) );
-	// return service.getComptesByID(idClient);
-	// }
-	
-	
+
+	// Ok
 	@GET
-	@Path("/majCompte/{idCompte}/{nouveauSolde}")
+	@Path("/listAuthName/{authName}")
 	@Produces(MediaType.TEXT_PLAIN)
-	public void majCompte(@PathParam("idCompte") int idCompte, @PathParam("nouveauSolde") double nouveauSolde) throws CompteOADException {
-		System.out.println("Coucou hibou");
+	public List<Client> getClientsByConseillerAuthName(@PathParam("authName") String authName) {
+		return service.getClientsByConseillerAuthName(authName);
 	}
-	
-	
-	//////////////////////////////////////////////////
-	// récupération d'un élémént
+
+	// Ok
 	@GET
-	@Path("/test")
+	@Path("/nomclient/{idClient}/{nom}")
 	@Produces(MediaType.TEXT_PLAIN)
-	public String Test() {
-		return "TEST";
+	public void modifierNomClient(@PathParam("idClient") int idClient, @PathParam("nom") String nom)
+			throws ClientOADException {
+		Client client = service.getClientByID(idClient);
+		client.setNom(nom);
+		service.majClient(client);
 	}
 
-	// récupération d'une valeur après envoi de paramètre
+	// Ok
 	@GET
-	@Path("/conversion/{montant}")
-	public double conversionED(@PathParam("montant") double mt) {
-		return mt * 1.24;
+	@Path("/prenomclient/{idClient}/{prenom}")
+	@Produces(MediaType.TEXT_PLAIN)
+	public void modifierPrenomClient(@PathParam("idClient") int idClient, @PathParam("prenom") String prenom)
+			throws ClientOADException {
+		Client client = service.getClientByID(idClient);
+		client.setPrenom(prenom);
+		service.majClient(client);
 	}
 
-	// récupération d'une liste d'éléments
+	// Ok
 	@GET
-	@Path("/infos")
-	// @Produces(MediaType.TEXT_PLAIN)
-	@Produces(MediaType.APPLICATION_JSON)
-	// @Produces(MediaType.APPLICATION_XML)
-	public List<String> getInfos() {
-		List<String> liste = new ArrayList<String>();
-		liste.add("A");
-		liste.add("B");
-		liste.add("C");
-		liste.add("D");
-
-		return liste;
+	@Path("/courrielclient/{idClient}/{courriel}")
+	@Produces(MediaType.TEXT_PLAIN)
+	public void modifierCourrielClient(@PathParam("idClient") int idClient, @PathParam("courriel") String courriel)
+			throws ClientOADException {
+		Client client = service.getClientByID(idClient);
+		client.setCourriel(courriel);
+		service.majClient(client);
 	}
+
+	// Ok
+	@GET
+	@Path("/adresseclient/{idClient}/{adresse}")
+	@Produces(MediaType.TEXT_PLAIN)
+	public void modifierAdresseClient(@PathParam("idClient") int idClient, @PathParam("adresse") String adresse)
+			throws ClientOADException {
+		Client client = service.getClientByID(idClient);
+		client.setAdresse(adresse);
+		service.majClient(client);
+	}
+
+	// Ok
+	@GET
+	@Path("/compte/{id}")
+	@Produces(MediaType.TEXT_PLAIN)
+	public Compte getCompteById(@PathParam("id") int id) {
+		return service.getCompteById(id);
+	}
+
+	// Ok
+	@GET
+	@Path("/listComptes/{idClient}")
+	@Produces(MediaType.TEXT_PLAIN)
+	public List<Compte> getComptesByID(@PathParam("idClient") int idClient) {
+		return service.getComptesByID(idClient);
+	}
+
 }

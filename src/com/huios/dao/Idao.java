@@ -6,13 +6,10 @@ import com.huios.domaine.Client;
 import com.huios.domaine.Compte;
 import com.huios.service.ConseillerServiceException;
 
-
-
 public interface Idao {
-	
-	
+
 	public List<Compte> getTousLesComptes();
-	
+
 	/**
 	 * Renvoie la liste des comptes d’un client en fonction de sa clé primaire.
 	 *
@@ -34,18 +31,6 @@ public interface Idao {
 	 *             erreur en cas d’échec de la récupération
 	 */
 	Compte getCompteById(int id);
-
-	/**
-	 * Changement du solde d’un compte.
-	 *
-	 * @param idCompte
-	 *            clé primaire du compte à modifier
-	 * @param nouveauSolde
-	 *            nouveau solde en euros
-	 * @throws CompteOADException
-	 *             erreur en cas d’échec de la mise à jour
-	 */
-	void majCompte(int idCompte, double nouveauSolde) throws CompteOADException;
 
 	/**
 	 * Changement du solde de deux comptes de manière atomique.
@@ -103,9 +88,9 @@ public interface Idao {
 	 *             erreur si la mise à jour a échouée
 	 */
 	void majClient(Client client) throws ClientOADException;
-	
-	//================================================================================================================================================================
-	
+
+	// ================================================================================================================================================================
+
 	/**
 	 * Effectue un virement de compte à compte. Il faut que les deux comptes soient
 	 * domiciliés dans la banque. Les conseillers peuvent effectuer des virement
@@ -122,10 +107,9 @@ public interface Idao {
 	 * @throws ConseillerServiceException
 	 *             erreur si la modification du solde a échouée
 	 */
-	public void effectuerVirement(Compte compteADebiter, Compte compteACrediter, double montant) throws ConseillerServiceException;
-	
+	public void effectuerVirement(Compte compteADebiter, Compte compteACrediter, double montant)
+			throws ConseillerServiceException;
 
-	
 	/**
 	 * Retourne la liste des comptes d’un client.
 	 *
@@ -136,61 +120,5 @@ public interface Idao {
 	 *             l’erreur si la récupération a échouée
 	 */
 	public List<Compte> getComptes(int idClient);
-	
 
-	
-	/**
-	 * Modifie le nom d’un client.
-	 *
-	 * @param client
-	 *            le client à modifier
-	 * @param nom
-	 *            le nouveau nom
-	 * @throws ConseillerServiceException
-	 *             erreur si la récupération a échouée
-	 */
-	public void modifierNomClient(Client client, String nom) throws ConseillerServiceException;
-	
-	/**
-	 * Modifie le prénom d’un client.
-	 *
-	 * @param client
-	 *            le client à modifier
-	 * @param prenom
-	 *            le nouveau prénom
-	 * @throws ConseillerServiceException
-	 *             erreur si la récupération a échouée
-	 */
-	public void modifierPrenomClient(Client client, String prenom) throws ConseillerServiceException;
-	
-	/**
-	 * Modifie l’adresse de messagerie d’un client.
-	 *
-	 * @param client
-	 *            le client à modifier
-	 * @param courriel
-	 *            la nouvelle adresse de messagerie
-	 * @throws ConseillerServiceException
-	 *             erreur si la récupération a échouée
-	 */
-	public void modifierCourrielClient(Client client, String courriel) throws ConseillerServiceException;
-	
-	/**
-	 * Modifie l’adresse d’un client.
-	 *
-	 * @param client
-	 *            le client à modifier
-	 * @param adresse
-	 *            la nouvelle adresse
-	 * @throws ConseillerServiceException
-	 *             erreur si la récupération a échouée
-	 */
-	public void modifierAdresseClient(Client client, String adresse) throws ConseillerServiceException;
-	
-	///////////////////////////////////
-	public void addCompte(Compte c);
-	public List<Compte> consulterComptes();
-	public Compte consulterCompte(Long code);
-	public boolean verser(Long code, double montant);
-	public boolean retirer(Long code, double montant);
 }
