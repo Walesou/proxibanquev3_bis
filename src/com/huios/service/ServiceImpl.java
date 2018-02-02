@@ -12,7 +12,7 @@ import com.huios.domaine.Client;
 import com.huios.domaine.Compte;
 import com.huios.domaine.Conseiller;
 
-@Stateless
+@Stateless(name="BP2")
 public class ServiceImpl implements IServiceLocal, IServiceRemote {
 
 	@Inject
