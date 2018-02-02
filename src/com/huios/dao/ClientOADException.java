@@ -1,6 +1,6 @@
 package com.huios.dao;
 
-/** @author Étienne, Sophia et Maria */
+/** @author Étienne, Sophia et Maria et Louis */
 public class ClientOADException extends Exception {
 
 	private static final long serialVersionUID = -4485207299675400262L;
