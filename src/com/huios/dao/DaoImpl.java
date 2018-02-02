@@ -30,7 +30,7 @@ public class DaoImpl implements Idao {
 		query.setParameter("motDePasse", motDePasse);
 		try {
 			conseiller = (Conseiller) query.getSingleResult();
-			if(conseiller == null) {
+			if(conseiller != null) {
 				return true;
 			}else {
 				return false;
