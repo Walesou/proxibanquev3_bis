@@ -28,13 +28,19 @@ public class DaoImpl implements Idao {
 		Query query = em.createQuery("select alias from Conseiller alias where courriel = :courriel and motDePasse = :motDePasse");
 		query.setParameter("courriel", courriel);
 		query.setParameter("motDePasse", motDePasse);
-		conseiller = (Conseiller) query.getSingleResult();
-		
-		if(conseiller == null) {
+		try {
+			conseiller = (Conseiller) query.getSingleResult();
+			if(conseiller == null) {
+				return true;
+			}else {
+				return false;
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 			return false;
 		}
-		else
-			return true;			
+					
 	}
 
 	
